@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title> Home </title>
+
+		<!-- Include required libraries for generating Excel file -->
+        <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+        <script src="https://unpkg.com/file-saver/dist/FileSaver.min.js"></script>
+
+
+        
+        <!-- font awesome cdn link -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;400;500&family=Roboto:wght@100;300;400;500&display=swap" rel="stylesheet">
+  
+        <!-- custom css file link -->
+        <link rel="stylesheet" type="text/css" href="../css/style.css">
+        
+        <!-- Add the ExcelJS library -->
+        <script src="https://unpkg.com/exceljs/dist/exceljs.min.js"></script>
+		
+		<script>
+			window.onload = function() {
+				// Get buttons and sections
+				var coursesBtn = document.getElementById("courses-btn");
+				var coursesSection = document.getElementById("courses-section");
+				var conferenceBtn = document.getElementById("conference-btn");
+				var conferenceSection = document.getElementById("conference-section");
+				
+				// Show courses section when courses button is clicked
+				coursesBtn.addEventListener("click", function() {
+					if (coursesSection.style.display === "none") {
+						coursesSection.style.display = "block";
+						conferenceSection.style.display = "none";
+					} else {
+						coursesSection.style.display = "none";
+					}
+				});
+				
+				// Show conference section when conference button is clicked
+				conferenceBtn.addEventListener("click", function() {
+					if (conferenceSection.style.display === "none") {
+						conferenceSection.style.display = "block";
+						coursesSection.style.display = "none";
+					} else {
+						conferenceSection.style.display = "none";
+					}
+				});
+			}
+			
+			var activeButton = null;
+
+			function toggleButtonColor(button) {
+				if (activeButton) {
+					activeButton.classList.remove("gray-button");
+				}
+
+				if (activeButton !== button) {
+					button.classList.add("gray-button");
+					activeButton = button;
+				} else {
+					activeButton = null;
+				}
+			}
+			
+            function downloadExcel() {
+                const xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            const data = JSON.parse(xhr.responseText);
+                            generateExcel(data);
+                        } else {
+                            console.error('Error:', xhr.status);
+                        }
+                    }
+                };
+                xhr.open('GET', 'fetch_attendance_forMAIN.php', true); // Update with the correct path to the PHP script
+                xhr.send();
+            }
+        
+            function generateExcel(data) {
+                const workbook = XLSX.utils.book_new();
+                const worksheet = XLSX.utils.aoa_to_sheet(data);
+                XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet 1');
+        
+                const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+                const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'attendance.xlsx';
+                link.click();
+        
+                URL.revokeObjectURL(link.href);
+            }
+
+		</script>
+	</head>
+    <body dir="rtl">
+
+		<!-- header section starts -->
+		<header>
+			<img src="../images/logo.png" alt="" height="60px">
+			<a href="../login.php" class="logout-btn">Logout</a>
+       	</header>
+		<!-- header section ends -->
+
+		<main>
+            
+            <!-- home section starts -->
+            <section class="home">
+				<div class="header-right">
+					<div class="wavy">
+					   <p>יש  לבחור ב-
+					   <span1>קורסים</span1>
+					   <span>\</span>
+					   <span1>כנסים</span1>
+					   על מנת  להתקדם לשלב הבא</p>
+				   </div>
+			   </div>
+		   
+			   <div class="container">
+				 
+				<button id="courses-btn" onclick="toggleButtonColor(this)">קורסים</button>
+				<button id="conference-btn" onclick="toggleButtonColor(this)">כנסים</button>
+				
+			   </div>
+				   <div id="courses-section" class="courses" style="display: none;">
+					   <h2>רשימת הקורסים:</h2>
+					   <ul>
+						   <li>
+							   <h3>Python - 0001</h3>
+							   <img src="../images/Python.png" alt="Course 1 Image" width="60px">
+							   <p><a href="DATES.html">צפה בתאריכי הקורס</a></p>
+						   </li>
+						   <li>
+							   <h3>Java - 0002</h3>
+							   <img src="../images/java.jpg" alt="Course 2 Image"  width="100px">
+							   <p><span>צפה בתאריכי הקורס</span></p>
+						   </li>
+						   <li>
+							   <h3>Data Science - 0003</h3>
+							   <img src="../images/data.png" alt="Course 3 Image"  width="150px">
+							   <p><span>צפה בתאריכי הקורס</span></p>
+						   </li>
+						   <li>
+							   <h3>WEB - 0004</h3>
+							   <img src="../images/web.jpg" alt="Course 4 Image"  width="100px">
+							   <p><span>צפה בתאריכי הקורס</span></p>
+						   </li>
+					   </ul>
+				   </div>
+				   <div id="conference-section" class="conference" style="display: none;">
+					   <h2>רשימת הכנסים:</h2>
+					   <ul>
+						   <li>
+							   <h3>כנס מהנדסים - 1025</h3>
+							   <h4>1.5.2023</h4>
+                                    <button id="btn-set" title="As soon as you click this button, the attendance list will be displayed" onclick="downloadExcel()">צפה ברשימת הנוכחות</button>
+
+						   </li>
+						   <li>
+							   <h3>כנס תעסוקה לסטודנטים - 1136</h3>
+							   <h4>15.5.2023</h4>
+							   <p><span>צפה ברשימת הנוכחות</p></span>
+						   </li>
+						   <li>
+							   <h3>כנס לקויות למידה - 1425</h3>
+							   <h4>30.5.2023</h4>
+							   <p><span>צפה ברשימת הנוכחות</p></span>
+						   </li>
+						   <li>
+							   <h3>כנס סוף סמסטר - 1689</h3>
+							   <h4>14.6.2023</h4>
+							   <p><span>צפה ברשימת הנוכחות</p></span>
+						   </li>
+					   </ul>
+				   </div>
+			</section>	
+			
+			</section>	
+			<!-- home section ends -->
+
+        </main>
+
+        <!-- footer section starts -->
+		<footer>
+				<div class="box-container">
+					<div class="box1">
+						<h1> <span>smart</span>Tracker</h1>
+                        <p>המערכת תוכננה כדי להקל את תהליך ניהול הנוכחות בכיתות ובכנסים, ולעקוב אחר הנוכחות של הסטודנטים באופן יעיל ומקיף.</p>
+                        <p>בכך, המערכת מאפשרת לך לחסוך זמן ומשאבים ולהגדיל את האמינות והמדידה של נוכחות הסטודנטים והמידע הקשור לכך.</p>
+					</div>
+
+					<div class="box1">
+						<h1><span>contact</span> us</h1>	
+						<p><i class="fas fa-phone"></i>0541234567</p>
+						<p><i class="fas fa-envelope"></i>example@gmail.com</p>
+						<p><i class="fas fa-map-marker-alt"></i>tel aviv,israel - xxxxxx</p>
+					</div>
+				</div>
+				<h2 class="credit"> &copy; created by <span>company name</span> | all rights reserved</h2>
+		</footer>
+		<!-- footer section ends -->
+
+    </body>
+</html>

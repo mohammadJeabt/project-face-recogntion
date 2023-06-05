@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Face Recognition</title>
+        
+    <style>
+        
+       body{
+            background-color: #c3d8d8;
+        }
+        /* Style the form container */
+        form {
+            padding: 20px;
+            margin: 0 auto;
+            width: 90%;
+            max-width: 600px;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            border-radius: 10px;
+            background: #fff;
+            box-shadow: 0 .5rem 2rem 4px rgb(13, 71, 179);
+        }
+
+        /* Style the form labels */
+        label {
+            display: inline-block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        /* Style the form input fields */
+        input[type="text"],
+        input[type="email"] {
+            display: block;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .details label{
+            font-size: 2.4rem;
+            font-weight: 500;
+        }
+        .details p{
+            font-size: 1.1rem;
+            font-weight:200;
+        }
+        .details p span{
+            font-size: 1.1rem;
+            font-weight:600;
+        }
+        /* Style the form submit button */
+        input[type="submit"] {
+            background-color: #2a53aa;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size:1.2rem;
+        }
+
+
+        button {
+            display: block;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #0077cc;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        button:hover {
+         background-color: #005fa3;
+        }
+
+        #video-container {
+            position: relative;
+            margin: 15px 0;
+        }
+
+        #video {
+            width: 100%;
+            height: auto;
+            border: none;
+            display: block;
+        }
+
+        #image {
+            display: none;
+            width: 100%;
+            height: auto;
+            border: none;
+            top: 0;
+            left: 0;
+        }
+
+        #snapBtn,
+        #retakeBtn {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            margin: 15px 0;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #0077cc;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        #snapBtn:hover,
+        #retakeBtn:hover {
+            background-color: #005fa3;
+        }
+
+        #retakeBtn {
+            display: none;
+        }
+
+        @media screen and (max-width: 480px) {
+        input[type="text"],
+        input[type="email"] {
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        button {
+            margin: 10px 0;
+            font-size: 14px;
+            padding: 8px 16px;
+        }
+        
+        #snapBtn,
+        #retakeBtn {
+            margin: 10px 0;
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+        }
+
+   
+		#finishBtn {
+		  display: block;
+		  padding: 10px 20px;
+		  margin-top: 15px;
+		  border: none;
+		  border-radius: 4px;
+		  background-color: #1815ac;
+		  color: #fff;
+		  cursor: pointer;
+		  font-size: 16px;
+		  font-weight: bold;
+          margin: auto;
+            cursor: not-allowed;
+        
+
+    }
+
+    #finishBtn:hover {
+      background-color: #37cccc;
+    }
+
+    </style>
+    
+
+    </head>
+    <body dir="rtl">
+        <main>
+            <form action="students.php" method="post">
+                <div class="details">
+                <label >פרטי התוכנית:</label><br>
+                <p id="program-details" name="program-details">
+                המערכת תשמש אותנו כרישום ראשוני לזיהוי פנים בכיתות ובכנסים באמצעות טכנולוגיית זיהוי פנים מובנית.
+                <br>
+                הדף הבא יאפשר לכך לצלם תמונת פנים, ואחר מכן שמירתה במאגר נתונים שהולך לשמש אותנו בשביל לרשום נוכחות באופן אוטומתי.
+                <br><span>
+                כיצד זה עובד?</span>
+                <br>
+                1. הזנת שם פרטי, אימייל מכללה, מס ת"ז סטודנט.
+                <br>
+                2. לחיצה על כפתור "מצלמה"
+                <br>
+                3. לאפשר גישה למצלמה
+                <br>
+                4. צילום תמונה ע"י לחיצה על הכפתור "צילום" (נא למצב את הראש מול המצלמה בצורה ישרה ובלי משקפי שמש)
+                <br>
+                5. ניתן לצלם תמונה שוב מחדש באמצעות הכפתור "צילום מחדש"
+                <br>6. לחיצה על "כן!" (כדי להבטיח שהתמונה ברורה)
+                <br>
+
+                7. לסיום יש ללחוץ על "סיום"
+                <br>
+                כדי להבטיח את הפרטיות והאבטחה של המשתמשים - נשמר את כל המידע אצלנו בשרתים מוגנים ומאובטחים, התכנית לא תשלח את התמונות או כל נתונים אישיים לשרתים חיצוניים.
+            </p><br>
+                </div>
+                <label for="name">שם:</label><br>
+                <input type="text" id="name" name="name"><br>
+                
+                <label for="email">אימייל:</label><br>
+                <input type="email" id="email" name="email"><br>
+                <span id="emailError" style="display:none; color:red;">כתובת האימייל אינה תקינה</span><br>
+                
+                <label for="id">תעודת זהות:</label><br>
+                <input type="text" id="id" name="id"><br>
+                <span id="idError" style="display:none; color:red;">מספר תעודת הזהות אינו תקין</span><br>
+
+                
+                <button type="button" id="cam">מצלמה</button><br>
+                <div id="video-container">
+                    <video id="video" playsinline></video>
+                    <button type="button" id="snapBtn" style="display: none;">צילום</button>
+                    <img id="image" name="image">
+                    <button type="button" id="retakeBtn" style="display: none;">צילום מחדש</button>
+                    
+                </div>
+				<p>האם התמונה ברורה?</p>
+                <input type="submit" value="כן!" id="submitBtn">
+				<button type="button" id="finishBtn" title="יש ללחוץ על 'כן'">סיום</button>
+            </form>
+        </main>
+
+        <script>
+        
+            function isValidEmail(email) {
+              const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+              return regex.test(email);
+            }
+            
+            function isValidId(id) {
+              const regex = /^[0-9]{9}$/;
+              return regex.test(id);
+            }
+            
+            function checkInputs() {
+              const name = document.getElementById('name').value;
+              const email = document.getElementById('email').value;
+              const id = document.getElementById('id').value;
+              const emailError = document.getElementById('emailError');
+              const idError = document.getElementById('idError');
+              let isValid = true;
+            
+              if (!isValidEmail(email)) {
+                emailError.style.display = 'inline-block';
+                isValid = false;
+              } else {
+                emailError.style.display = 'none';
+              }
+            
+              if (!isValidId(id)) {
+                idError.style.display = 'inline-block';
+                isValid = false;
+              } else {
+                idError.style.display = 'none';
+              }
+            
+              return isValid;
+            }
+
+            const camBtn = document.getElementById('cam');
+            const video = document.getElementById('video');
+            const snapBtn = document.getElementById('snapBtn');
+            const snapshot = document.getElementById('image');
+            const retakeBtn = document.getElementById('retakeBtn');
+        
+            // Function to start the camera and show the snapshot button
+            function startCamera() {
+              navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                  video.srcObject = stream;
+                  video.play();
+                  snapBtn.style.display = 'inline-block';
+                })
+                .catch(error => console.log(error));
+            }
+        
+            // Function to take a snapshot and show the snapshot image
+            function takeSnapshot() {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                const imgUrl = canvas.toDataURL('image/png'); // change to 'image/jpeg' if needed
+                snapshot.setAttribute('src', imgUrl);
+                video.pause();
+                video.srcObject.getTracks().forEach(track => track.stop());
+                snapBtn.style.display = 'none';
+                retakeBtn.style.display = 'inline-block';
+            }           
+        
+            // Function to retake the snapshot and hide the snapshot image
+            function retakeSnapshot() {
+              video.play();
+              snapshot.removeAttribute('src');
+              retakeBtn.style.display = 'none';
+              snapBtn.style.display = 'inline-block';
+              startCamera();
+            }
+        
+            camBtn.addEventListener('click', startCamera);
+            snapBtn.addEventListener('click', takeSnapshot);
+            retakeBtn.addEventListener('click', retakeSnapshot);
+            
+        
+            const form = document.querySelector('form');
+            
+            form.addEventListener('submit', (e) => {
+              e.preventDefault(); // prevent default form submission behavior
+              
+              // check form inputs validity
+              if (!checkInputs()) {
+                return; // stop form submission if inputs are invalid
+              }
+            
+              // get form data
+              const formData = new FormData(form);
+              
+              // add snapshot image data to form data
+              const imgUrl = snapshot.getAttribute('src');
+              const imgData = imgUrl.substring(imgUrl.indexOf(',') + 1);
+              formData.append('image', imgData);
+              
+              // send form data to PHP script using fetch API
+              fetch('students.php', {
+                method: 'POST',
+                body: formData
+              })
+              .then(response => response.json())
+              .then(data => {
+                console.log(data); // handle PHP script response
+              })
+              .catch(error => console.error(error));
+            });
+			
+            const submitBtn = document.getElementById('submitBtn');
+const finishBtn = document.getElementById('finishBtn');
+
+// Disable finishBtn initially
+finishBtn.disabled = true;
+
+// Function to handle the submit button click
+function handleSubmitClick() {
+  // Perform form validation
+  if (checkInputs()) {
+    // Enable finishBtn if inputs are valid
+    finishBtn.disabled = false;
+    finishBtn.style.cursor = 'pointer';
+    finishBtn.style.color = 'white';
+  }
+}
+
+submitBtn.addEventListener('click', handleSubmitClick);
+
+// Function to handle the "Finish" button click
+function handleFinishClick() {
+  alert('Your form has been sent successfully!');
+  location.reload(); // Reload the form
+}
+
+finishBtn.addEventListener('click', handleFinishClick);
+
+
+
+          </script>
+
+
+    </body>
+</html>

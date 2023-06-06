@@ -129,24 +129,24 @@
         }
 
         @media screen and (max-width: 480px) {
-        input[type="text"],
-        input[type="email"] {
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-        
-        button {
-            margin: 10px 0;
-            font-size: 14px;
-            padding: 8px 16px;
-        }
-        
-        #snapBtn,
-        #retakeBtn {
-            margin: 10px 0;
-            padding: 8px 16px;
-            font-size: 14px;
-        }
+            input[type="text"],
+            input[type="email"] {
+                margin-bottom: 10px;
+                font-size: 14px;
+            }
+            
+            button {
+                margin: 10px 0;
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+            
+            #snapBtn,
+            #retakeBtn {
+                margin: 10px 0;
+                padding: 8px 16px;
+                font-size: 14px;
+            }
         }
 
    
@@ -165,11 +165,11 @@
             cursor: not-allowed;
         
 
-    }
-
-    #finishBtn:hover {
-      background-color: #37cccc;
-    }
+        }
+    
+        #finishBtn:hover {
+          background-color: #37cccc;
+        }
 
     </style>
     
@@ -179,42 +179,44 @@
         <main>
             <form action="students.php" method="post">
                 <div class="details">
-                <label >פרטי התוכנית:</label><br>
-                <p id="program-details" name="program-details">
-                המערכת תשמש אותנו כרישום ראשוני לזיהוי פנים בכיתות ובכנסים באמצעות טכנולוגיית זיהוי פנים מובנית.
-                <br>
-                הדף הבא יאפשר לכך לצלם תמונת פנים, ואחר מכן שמירתה במאגר נתונים שהולך לשמש אותנו בשביל לרשום נוכחות באופן אוטומתי.
-                <br><span>
-                כיצד זה עובד?</span>
-                <br>
-                1. הזנת שם פרטי, אימייל מכללה, מס ת"ז סטודנט.
-                <br>
-                2. לחיצה על כפתור "מצלמה"
-                <br>
-                3. לאפשר גישה למצלמה
-                <br>
-                4. צילום תמונה ע"י לחיצה על הכפתור "צילום" (נא למצב את הראש מול המצלמה בצורה ישרה ובלי משקפי שמש)
-                <br>
-                5. ניתן לצלם תמונה שוב מחדש באמצעות הכפתור "צילום מחדש"
-                <br>6. לחיצה על "כן!" (כדי להבטיח שהתמונה ברורה)
-                <br>
-
-                7. לסיום יש ללחוץ על "סיום"
-                <br>
-                כדי להבטיח את הפרטיות והאבטחה של המשתמשים - נשמר את כל המידע אצלנו בשרתים מוגנים ומאובטחים, התכנית לא תשלח את התמונות או כל נתונים אישיים לשרתים חיצוניים.
-            </p><br>
+                    <label >פרטי התוכנית:</label><br>
+                    <p id="program-details" name="program-details">
+                    המערכת תשמש אותנו כרישום ראשוני לזיהוי פנים בכיתות ובכנסים באמצעות טכנולוגיית זיהוי פנים מובנית.
+                    <br>
+                    הדף הבא יאפשר לכך לצלם תמונת פנים, ואחר מכן שמירתה במאגר נתונים שהולך לשמש אותנו בשביל לרשום נוכחות באופן אוטומתי.
+                    <br><span>
+                    כיצד זה עובד?</span>
+                    <br>
+                    1. הזנת שם פרטי, אימייל מכללה, מס ת"ז סטודנט.
+                    <br>
+                    2. לחיצה על כפתור "מצלמה"
+                    <br>
+                    3. לאפשר גישה למצלמה
+                    <br>
+                    4. צילום תמונה ע"י לחיצה על הכפתור "צילום" (נא למצב את הראש מול המצלמה בצורה ישרה ובלי משקפי שמש)
+                    <br>
+                    5. ניתן לצלם תמונה שוב מחדש באמצעות הכפתור "צילום מחדש"
+                    <br>6. לחיצה על "כן!" (כדי להבטיח שהתמונה ברורה)
+                    <br>
+    
+                    7. לסיום יש ללחוץ על "סיום"
+                    <br>
+                    כדי להבטיח את הפרטיות והאבטחה של המשתמשים - נשמר את כל המידע אצלנו בשרתים מוגנים ומאובטחים, התכנית לא תשלח את התמונות או כל נתונים אישיים לשרתים חיצוניים.
+                  </p><br>
                 </div>
                 <label for="name">שם:</label><br>
-                <input type="text" id="name" name="name"><br>
+                <input type="text" id="name" name="name">
+                <span id="nameError" style="display:none; color:red;">שם לא תקין</span><br>
+                <br>  
                 
                 <label for="email">אימייל:</label><br>
-                <input type="email" id="email" name="email"><br>
+                <input type="email" id="email" name="email">
                 <span id="emailError" style="display:none; color:red;">כתובת האימייל אינה תקינה</span><br>
-                
+                <br>
                 <label for="id">תעודת זהות:</label><br>
-                <input type="text" id="id" name="id"><br>
+                <input type="text" id="id" name="id">
                 <span id="idError" style="display:none; color:red;">מספר תעודת הזהות אינו תקין</span><br>
-
+                <br>
                 
                 <button type="button" id="cam">מצלמה</button><br>
                 <div id="video-container">
@@ -241,6 +243,10 @@
               const regex = /^[0-9]{9}$/;
               return regex.test(id);
             }
+            function isValidName(name) {
+              return name.trim() !== '';
+            }
+
             
             function checkInputs() {
               const name = document.getElementById('name').value;
@@ -249,7 +255,13 @@
               const emailError = document.getElementById('emailError');
               const idError = document.getElementById('idError');
               let isValid = true;
-            
+              
+              if (!isValidName(name)) {
+                    nameError.style.display = 'inline-block';
+                    isValid = false;
+                } else {
+                    nameError.style.display = 'none';
+              }
               if (!isValidEmail(email)) {
                 emailError.style.display = 'inline-block';
                 isValid = false;

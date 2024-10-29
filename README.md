@@ -16,15 +16,18 @@ Backend: PHP
 Database: MySQL
 
 Installation ⚙️
+
 Clone the repository:
 
 bash
-Copy code
+
+Copy code:
 git clone https://github.com/yourusername/smart-attendance-system.git
 Navigate to the project directory:
 
 bash
-Copy code
+
+Copy code:
 cd smart-attendance-system
 Set up the database:
 
@@ -32,6 +35,7 @@ Create a MySQL database and configure the connection settings in login.php.
 Start a local server (e.g., XAMPP, MAMP) and place the project files in the server's root directory.
 
 Usage 🚀
+
 Open your web browser and navigate to http://localhost/smart-attendance-system/login.php.
 Enter your username and password to log in. 🔑
 Once logged in, you can manage attendance for courses and conferences.
